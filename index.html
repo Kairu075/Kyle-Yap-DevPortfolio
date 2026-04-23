@@ -1,0 +1,3206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kyle Dominic Yap — Dev Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+<style>
+
+/* =============================================
+   ROOT VARIABLES
+============================================= */
+:root {
+  --bg: #080a0e;
+  --bg2: #0d1117;
+  --bg3: #111820;
+  --surface: #141c26;
+  --surface2: #1a2333;
+  --border: rgba(255, 255, 255, 0.06);
+  --border2: rgba(255, 255, 255, 0.1);
+  --accent: #00d4ff;
+  --accent2: #0099cc;
+  --accent3: #00ffaa;
+  --accent-gold: #f5c842;
+  --text: #e8edf5;
+  --text2: #8a9bb0;
+  --text3: #5a6e84;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+/* =============================================
+   RESET & BASE
+============================================= */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+/* =============================================
+   NAVIGATION
+============================================= */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 20px 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.4s ease;
+}
+
+nav.scrolled {
+  background: rgba(8, 10, 14, 0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 5%;
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text2);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover { color: var(--accent); }
+.nav-links a:hover::after { width: 100%; }
+
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text2);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+/* Mobile nav menu */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(8, 10, 14, 0.98);
+  backdrop-filter: blur(20px);
+  z-index: 99;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 36px;
+}
+
+.mobile-nav.open { display: flex; }
+
+.mobile-nav a {
+  color: var(--text2);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+.mobile-nav a:hover { color: var(--accent); }
+
+.mobile-nav-close {
+  position: absolute;
+  top: 20px;
+  right: 5%;
+  background: none;
+  border: none;
+  color: var(--text2);
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* =============================================
+   HERO SECTION
+============================================= */
+#hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 100px 8% 60px;
+  position: relative;
+  overflow: hidden;
+  gap: 60px;
+}
+
+.hero-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at 30% 50%, black 20%, transparent 80%);
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.hero-orb-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.12) 0%, transparent 70%);
+  top: -100px;
+  left: -100px;
+  animation: orbFloat 8s ease-in-out infinite;
+}
+
+.hero-orb-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0, 255, 170, 0.08) 0%, transparent 70%);
+  bottom: -50px;
+  left: 200px;
+  animation: orbFloat 10s ease-in-out infinite reverse;
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, -30px) scale(1.05); }
+}
+
+/* Hero Content */
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  background: rgba(0, 212, 255, 0.06);
+  opacity: 0;
+  animation: fadeSlideUp 0.8s 0.2s forwards;
+}
+
+.hero-badge-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent3);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 16px;
+  opacity: 0;
+  animation: fadeSlideUp 0.8s 0.4s forwards;
+}
+
+.hero-name .accent-word { color: var(--accent); }
+
+.hero-role {
+  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+  color: var(--text2);
+  font-weight: 300;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeSlideUp 0.8s 0.55s forwards;
+}
+
+.hero-desc {
+  font-size: 0.95rem;
+  color: var(--text2);
+  line-height: 1.8;
+  max-width: 460px;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeSlideUp 0.8s 0.7s forwards;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeSlideUp 0.8s 0.85s forwards;
+}
+
+/* Buttons */
+.btn-primary {
+  padding: 13px 28px;
+  background: var(--accent);
+  color: #000;
+  border: none;
+  border-radius: 4px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+}
+
+.btn-primary:hover {
+  background: var(--accent3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 212, 255, 0.3);
+}
+
+.btn-primary:hover::before { transform: translateX(100%); }
+
+.btn-secondary {
+  padding: 13px 28px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* Hero Social Icons */
+.hero-socials {
+  display: flex;
+  gap: 14px;
+  margin-top: 36px;
+  opacity: 0;
+  animation: fadeSlideUp 0.8s 1s forwards;
+}
+
+.hero-social-link {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  background: var(--surface);
+}
+
+.hero-social-link img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: brightness(0.7);
+  transition: filter 0.3s;
+}
+
+.hero-social-link:hover {
+  border-color: var(--accent);
+  background: rgba(0, 212, 255, 0.08);
+}
+
+.hero-social-link:hover img { filter: brightness(1) saturate(1.5); }
+
+/* Hero Image */
+.hero-image-wrap {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  opacity: 0;
+  animation: heroImageReveal 1.2s 0.6s forwards;
+}
+
+@keyframes heroImageReveal {
+  0% { opacity: 0; transform: translateX(40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+.hero-img-container {
+  position: relative;
+  width: 480px;
+  height: 600px;
+}
+
+.hero-img-container::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(ellipse, rgba(0, 212, 255, 0.2) 0%, transparent 70%);
+  filter: blur(40px);
+  z-index: 0;
+}
+
+.hero-img-container img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: drop-shadow(0 20px 60px rgba(0, 212, 255, 0.2));
+}
+
+/* Floating accent lines */
+.hero-img-line {
+  position: absolute;
+  background: var(--accent);
+  border-radius: 2px;
+  opacity: 0.4;
+}
+
+.hero-img-line-1 {
+  width: 75px;
+  height: 2px;
+  top: 100px;
+  right: -25px;
+  animation: linePulse 3s infinite;
+}
+
+.hero-img-line-2 {
+  width: 2px;
+  height: 100px;
+  top: 25px;
+  right: 50px;
+  animation: linePulse 3s 0.5s infinite;
+}
+
+.hero-img-line-3 {
+  width: 50px;
+  height: 2px;
+  bottom: 150px;
+  left: -12px;
+  animation: linePulse 3s 1s infinite;
+}
+
+/* Bottom base line */
+.hero-img-line-4 {
+  width: 72%;
+  height: 2px;
+  bottom: 0;
+  left: 14%;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.55;
+  animation: linePulse 3s 0.8s infinite;
+  border-radius: 0;
+}
+
+/* Right vertical framing line */
+.hero-img-line-5 {
+  width: 2px;
+  height: 58%;
+  right: 0;
+  top: 22%;
+  background: linear-gradient(180deg, transparent, var(--accent), transparent);
+  opacity: 0.4;
+  animation: linePulse 3s 1.3s infinite;
+}
+
+@keyframes linePulse {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.75; }
+}
+
+/* Hero Stat Cards */
+.hero-stat-cards {
+  position: absolute;
+  left: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 3;
+}
+
+.hero-stat {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 12px 16px;
+  backdrop-filter: blur(10px);
+  min-width: 120px;
+}
+
+.hero-stat-num {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.hero-stat-label {
+  font-size: 0.7rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+
+@keyframes fadeSlideUp {
+  0% { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* =============================================
+   SECTION COMMONS
+============================================= */
+section { padding: 100px 8%; }
+
+.section-label {
+  font-size: 0.72rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-label::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.section-label.gold { color: var(--accent-gold); }
+.section-label.gold::before { background: var(--accent-gold); }
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.section-subtitle {
+  color: var(--text2);
+  font-size: 1rem;
+  max-width: 560px;
+  line-height: 1.8;
+  margin-bottom: 60px;
+}
+
+/* Reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border2), transparent);
+}
+
+/* =============================================
+   ABOUT SECTION
+============================================= */
+#about { background: var(--bg2); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.about-text p {
+  color: var(--text2);
+  line-height: 1.9;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+}
+
+.about-edu {
+  margin-top: 36px;
+  padding: 20px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.about-edu img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.about-edu-text strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--text);
+}
+
+.about-edu-text span {
+  font-size: 0.8rem;
+  color: var(--text2);
+}
+
+/* Skills */
+.skills-category { margin-bottom: 32px; }
+
+.skills-cat-label {
+  font-size: 0.72rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.82rem;
+  color: var(--text2);
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.skill-chip img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.skill-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(0, 212, 255, 0.06);
+  transform: translateY(-2px);
+}
+
+/* =============================================
+   BROWSER CHROME (shared by cards)
+============================================= */
+.browser-chrome {
+  background: #1a2030;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.browser-dots { display: flex; gap: 6px; }
+
+.browser-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.browser-dot:nth-child(1) { background: #ff5f57; }
+.browser-dot:nth-child(2) { background: #febc2e; }
+.browser-dot:nth-child(3) { background: #28c840; }
+
+.browser-bar {
+  flex: 1;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  color: var(--text3);
+  font-family: monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =============================================
+   PROJECT CARDS
+============================================= */
+#projects { background: var(--bg); }
+#it-projects { background: var(--bg2); }
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 28px;
+}
+
+.projects-section-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text2);
+  margin: 50px 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.projects-section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+  position: relative;
+}
+
+.project-card:hover {
+  border-color: rgba(0, 212, 255, 0.35);
+  transform: translateY(-6px);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(0, 212, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+#it-projects .project-card:hover {
+  border-color: rgba(245, 200, 66, 0.3);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(245, 200, 66, 0.08);
+}
+
+/* Card Carousel */
+.card-carousel {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.carousel-slides {
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.carousel-slide {
+  min-width: 100%;
+  height: 100%;
+  background: var(--bg3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+}
+
+.carousel-dot-btn {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 0;
+}
+
+.carousel-dot-btn.active {
+  background: var(--accent);
+  width: 16px;
+  border-radius: 3px;
+}
+
+/* Card Body */
+.card-body { padding: 20px; }
+
+.card-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.card-desc {
+  font-size: 0.82rem;
+  color: var(--text2);
+  line-height: 1.7;
+  margin-bottom: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.card-tag {
+  padding: 3px 9px;
+  background: rgba(0, 212, 255, 0.08);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: 3px;
+  font-size: 0.7rem;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  font-family: monospace;
+}
+
+.card-tag.collab {
+  background: rgba(0, 255, 170, 0.08);
+  border-color: rgba(0, 255, 170, 0.2);
+  color: var(--accent3);
+}
+
+/* Card Footer */
+.card-footer {
+  display: flex;
+  gap: 10px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.card-link {
+  flex: 1;
+  padding: 8px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: all 0.3s;
+}
+
+.card-link.live {
+  background: var(--accent);
+  color: #000;
+}
+
+.card-link.live:hover { background: var(--accent3); }
+
+.card-link.github {
+  border: 1px solid var(--border2);
+  color: var(--text2);
+}
+
+.card-link.github:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Collab badge */
+.collab-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(0, 255, 170, 0.08);
+  border: 1px solid rgba(0, 255, 170, 0.2);
+  border-radius: 3px;
+  font-size: 0.68rem;
+  color: var(--accent3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  position: absolute;
+  top: 48px;
+  right: 14px;
+  z-index: 5;
+}
+
+/* =============================================
+   CERTIFICATIONS
+============================================= */
+#certifications { background: var(--bg); }
+
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.cert-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+}
+
+.cert-card:hover {
+  border-color: rgba(0, 255, 170, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.cert-img-wrap {
+  height: 160px;
+  background: var(--bg3);
+  overflow: hidden;
+  position: relative;
+}
+
+.cert-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+  display: block;
+}
+
+.cert-card:hover .cert-img-wrap img { transform: scale(1.04); }
+
+/* Fallback if image missing */
+.cert-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.cert-body { padding: 16px; }
+
+.cert-issuer {
+  font-size: 0.7rem;
+  color: var(--accent3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.cert-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.cert-date {
+  font-size: 0.78rem;
+  color: var(--text3);
+}
+
+.cert-desc {
+  font-size: 0.8rem;
+  color: var(--text2);
+  line-height: 1.7;
+  margin-top: 6px;
+}
+
+/* =============================================
+   UNIVERSAL MODAL
+============================================= */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(14px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  padding: 20px;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 780px;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: scale(0.92) translateY(20px);
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.modal-overlay.active .modal { transform: scale(1) translateY(0); }
+
+.modal-browser {
+  background: #1a2030;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 16px 16px 0 0;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.modal-dots { display: flex; gap: 6px; }
+
+.modal-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.modal-dot:nth-child(1) { background: #ff5f57; cursor: pointer; }
+.modal-dot:nth-child(2) { background: #febc2e; }
+.modal-dot:nth-child(3) { background: #28c840; }
+
+.modal-url {
+  flex: 1;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  color: var(--text2);
+  font-family: monospace;
+}
+
+/* Project modal carousel */
+.modal-carousel {
+  position: relative;
+  height: 320px;
+  overflow: hidden;
+  background: var(--bg3);
+}
+
+.modal-slides {
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.modal-slide {
+  min-width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.modal-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Cert modal single image */
+.modal-cert-img-wrap {
+  height: 300px;
+  overflow: hidden;
+  background: var(--bg3);
+}
+
+.modal-cert-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: var(--bg3);
+}
+
+.modal-cert-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text3);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+  z-index: 2;
+}
+
+.modal-nav:hover {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+}
+
+.modal-nav-prev { left: 12px; }
+.modal-nav-next { right: 12px; }
+
+.modal-carousel-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+}
+
+/* Modal Body */
+.modal-body { padding: 28px; }
+
+.modal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.modal-badge.cert-badge {
+  background: rgba(0, 255, 170, 0.1);
+  border: 1px solid rgba(0, 255, 170, 0.3);
+  color: var(--accent3);
+}
+
+.modal-badge.game-badge {
+  background: rgba(245, 200, 66, 0.1);
+  border: 1px solid rgba(245, 200, 66, 0.3);
+  color: var(--accent-gold);
+}
+
+.modal-badge.collab-badge {
+  background: rgba(0, 255, 170, 0.08);
+  border: 1px solid rgba(0, 255, 170, 0.2);
+  color: var(--accent3);
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+
+.modal-desc {
+  color: var(--text2);
+  line-height: 1.8;
+  font-size: 0.92rem;
+  margin-bottom: 20px;
+}
+
+.modal-meta label {
+  font-size: 0.7rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 6px;
+  margin-top: 16px;
+}
+
+.modal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.modal-info-row {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.modal-info-item label {
+  font-size: 0.68rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 3px;
+  margin-top: 0;
+}
+
+.modal-info-item span {
+  font-size: 0.88rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 12px;
+  text-align: center;
+  border-radius: 6px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s;
+  cursor: pointer;
+  border: none;
+}
+
+.modal-btn.live { background: var(--accent); color: #000; }
+.modal-btn.live:hover { background: var(--accent3); }
+.modal-btn.github { background: transparent; border: 1px solid var(--border2); color: var(--text2); }
+.modal-btn.github:hover { border-color: var(--accent); color: var(--accent); }
+.modal-btn.cert-verify { background: var(--accent3); color: #000; }
+.modal-btn.cert-verify:hover { filter: brightness(1.1); }
+.modal-btn.game-btn { background: var(--accent-gold); color: #000; }
+.modal-btn.game-btn:hover { filter: brightness(1.1); }
+
+/* =============================================
+   CONTACT SECTION
+============================================= */
+#contact { background: var(--bg3); position: relative; overflow: hidden; }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.contact-item:first-of-type { border-top: 1px solid var(--border); }
+
+.contact-icon {
+  width: 38px;
+  height: 38px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contact-icon img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.contact-detail strong {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 2px;
+}
+
+.contact-detail a,
+.contact-detail span {
+  font-size: 0.9rem;
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contact-detail a:hover { color: var(--accent); }
+
+/* Contact Form */
+.contact-form { display: flex; flex-direction: column; gap: 18px; }
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+
+.form-group label {
+  font-size: 0.75rem;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 16px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+  resize: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.08);
+}
+
+.form-group textarea { height: 120px; }
+.form-group select option { background: var(--surface); }
+
+.form-status {
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  display: none;
+}
+
+.form-status.success {
+  background: rgba(0, 255, 170, 0.1);
+  border: 1px solid rgba(0, 255, 170, 0.3);
+  color: var(--accent3);
+}
+
+.form-status.error {
+  background: rgba(255, 80, 80, 0.1);
+  border: 1px solid rgba(255, 80, 80, 0.3);
+  color: #ff8080;
+}
+
+/* =============================================
+   FOOTER
+============================================= */
+footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  padding: 40px 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.footer-copy { font-size: 0.82rem; color: var(--text3); }
+.footer-copy strong { color: var(--accent); }
+
+.footer-links { display: flex; gap: 24px; }
+
+.footer-links a {
+  font-size: 0.82rem;
+  color: var(--text3);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--accent); }
+
+/* =============================================
+   RESPONSIVE — TABLET (max 1100px)
+============================================= */
+@media (max-width: 1100px) {
+  .hero-img-container {
+    width: 380px;
+    height: 480px;
+  }
+
+  .hero-stat-cards { left: -20px; }
+}
+
+/* =============================================
+   RESPONSIVE — MOBILE (max 768px)
+============================================= */
+@media (max-width: 768px) {
+  /* Nav */
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+
+  /* Hero: stack vertically, content first then image below */
+  #hero {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    padding: 110px 6% 60px;
+    gap: 40px;
+    text-align: center;
+    min-height: auto;
+  }
+
+  .hero-content { order: 1; }
+  .hero-image-wrap { order: 2; justify-content: center; align-items: center; }
+
+  .hero-desc { margin-left: auto; margin-right: auto; }
+
+  .hero-actions { justify-content: center; }
+
+  .hero-socials { justify-content: center; }
+
+  .hero-img-container {
+    width: 280px;
+    height: 340px;
+  }
+
+  .hero-stat-cards {
+    left: -10px;
+    top: auto;
+    bottom: 20px;
+    transform: none;
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .hero-stat {
+    min-width: 90px;
+    padding: 10px 12px;
+  }
+
+  .hero-stat-num { font-size: 1.1rem; }
+
+  .hero-img-line-1,
+  .hero-img-line-2,
+  .hero-img-line-3,
+  .hero-img-line-5 { display: none; }
+
+  .hero-img-line-4 { width: 90%; left: 5%; }
+
+  /* Sections */
+  section { padding: 70px 5%; }
+
+  .about-grid { grid-template-columns: 1fr; gap: 50px; }
+
+  .contact-grid { grid-template-columns: 1fr; gap: 50px; }
+
+  .form-row { grid-template-columns: 1fr; }
+
+  .projects-grid { grid-template-columns: 1fr; }
+
+  .certs-grid { grid-template-columns: 1fr; }
+
+  .modal-actions { flex-direction: column; }
+
+  footer {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .footer-links { flex-wrap: wrap; justify-content: center; }
+}
+
+/* =============================================
+   RESPONSIVE — SMALL MOBILE (max 420px)
+============================================= */
+@media (max-width: 420px) {
+  .hero-name { font-size: 2.2rem; }
+
+  .hero-img-container {
+    width: 240px;
+    height: 290px;
+  }
+
+  .hero-stat-cards { display: none; }
+
+  .btn-primary,
+  .btn-secondary { padding: 11px 20px; font-size: 0.78rem; }
+
+  .projects-grid { grid-template-columns: 1fr; gap: 20px; }
+
+  .certs-grid { grid-template-columns: 1fr; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- =============================================
+   NAVIGATION
+============================================= -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">KDY</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#it-projects">IT Projects</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</nav>
+
+<!-- Mobile Nav Overlay -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="mobileNavClose">&times;</button>
+  <a href="#about" class="mobile-nav-link">About</a>
+  <a href="#projects" class="mobile-nav-link">Projects</a>
+  <a href="#it-projects" class="mobile-nav-link">IT Projects</a>
+  <a href="#certifications" class="mobile-nav-link">Certs</a>
+  <a href="#contact" class="mobile-nav-link">Contact</a>
+</div>
+
+<!-- =============================================
+   HERO
+============================================= -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+
+  <!-- Left: Content -->
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Available for opportunities
+    </div>
+
+    <h1 class="hero-name">
+      Kyle Dominic <span class="accent-word">Yap</span>
+    </h1>
+
+    <p class="hero-role">Full Stack Developer &mdash; 3rd Year BSIT Student</p>
+
+    <p class="hero-desc">
+      Full Stack Developer and BSIT student passionate about building modern, scalable, and user-focused web applications.
+    </p>
+
+    <div class="hero-actions">
+      <a href="kyle-cv.pdf" download class="btn-primary">Download CV</a>
+      <a href="#projects" class="btn-secondary">View Projects</a>
+    </div>
+
+    <div class="hero-socials">
+      <a href="mailto:kyledominic075@gmail.com" class="hero-social-link" title="Gmail">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Gmail">
+      </a>
+      <a href="https://github.com/kairu075" target="_blank" class="hero-social-link" title="GitHub">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" style="filter: invert(1) brightness(0.6)">
+      </a>
+      <a href="https://www.facebook.com/" target="_blank" class="hero-social-link" title="Facebook">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+      </a>
+      <a href="https://www.linkedin.com/" target="_blank" class="hero-social-link" title="LinkedIn">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn">
+      </a>
+    </div>
+  </div>
+
+  <!-- Right: Photo -->
+  <div class="hero-image-wrap">
+    <div class="hero-img-container">
+      <div class="hero-img-line hero-img-line-1"></div>
+      <div class="hero-img-line hero-img-line-2"></div>
+      <div class="hero-img-line hero-img-line-3"></div>
+      <div class="hero-img-line hero-img-line-4"></div>
+      <div class="hero-img-line hero-img-line-5"></div>
+
+      <img src="images/kyle-dominic-yap.png" alt="Kyle Dominic Yap">
+
+      <div class="hero-stat-cards">
+        <div class="hero-stat">
+          <div class="hero-stat-num">10+</div>
+          <div class="hero-stat-label">Projects</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">3rd</div>
+          <div class="hero-stat-label">Year BSIT</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- =============================================
+   ABOUT & SKILLS
+============================================= -->
+<section id="about">
+  <div class="about-grid">
+
+    <!-- Left: Bio -->
+    <div class="about-text reveal">
+      <div class="section-label">About Me</div>
+      <h2 class="section-title">Crafting Digital<br>Experiences</h2>
+      <p>
+        I'm currently a 3rd year Bachelor of Science in Information Technology student
+        with a strong passion for full-stack web development. I enjoy creating systems
+        that are not only functional but also user-friendly, scalable, and built with
+        purpose.
+      </p>
+      <p>
+          I've worked on different types of projects such as management systems, booking
+          platforms, and e-commerce websites, where I focus on solving real-world
+          problems through clean code and efficient system design.
+      </p>
+      <p>
+          At the moment, I'm looking for freelance projects and full-stack development
+          opportunities where I can continue learning, grow my skills, and contribute to
+          meaningful work.
+      </p>
+
+      <div class="about-edu">
+        <img src="images/tip-logo.jpg" alt="TIP Logo">
+        <div class="about-edu-text">
+          <strong>Technological Institute of the Philippines</strong>
+          <span>Quezon City &nbsp;&middot;&nbsp; B.S. Information Technology</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Skills -->
+    <div class="reveal reveal-delay-2">
+      <div class="section-label">Tech Stack</div>
+      <h2 class="section-title">Skills &amp; Tools</h2>
+
+      <div class="skills-category">
+        <div class="skills-cat-label">Frontend</div>
+        <div class="skills-grid">
+          <div class="skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+            HTML5
+          </div>
+          <div class="skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+            CSS3
+          </div>
+          <div class="skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+            JavaScript
+          </div>
+          <div class="skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
+            Bootstrap
+          </div>
+          <div class="skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original.svg" alt="jQuery">
+            jQuery
+          </div>
+        </div>
+      </div>
+
+      <div class="skills-category">
+        <div class="skills-cat-label">Backend</div>
+        <div class="skills-grid">
+          <div class="skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP">
+            PHP
+          </div>
+          <div class="skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" alt="Laravel">
+            Laravel
+          </div>
+          <div class="skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js">
+            Node.js
+          </div>
+          <div class="skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+            Java
+          </div>
+        </div>
+      </div>
+
+      <div class="skills-category">
+        <div class="skills-cat-label">Database, Tools &amp; Other</div>
+        <div class="skills-grid">
+          <div class="skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
+            MySQL
+          </div>
+          <div class="skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">
+            Git
+          </div>
+          <div class="skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" style="filter: invert(0.7)">
+            GitHub
+          </div>
+          <div class="skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code">
+            VS Code
+          </div>
+          <div class="skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma">
+            Figma
+          </div>
+          <div class="skill-chip">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unity/unity-original.svg" alt="Unity" style="filter: invert(0.7)">
+            Unity
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- =============================================
+   FULLSTACK PROJECTS
+============================================= -->
+<section id="projects">
+  <div class="section-label reveal">Projects</div>
+  <h2 class="section-title reveal">Built With Purpose</h2>
+  <p class="section-subtitle reveal">
+    Real-world systems designed with clean code, scalable architecture,
+    and user-centered interfaces.
+  </p>
+
+  <div class="projects-section-label reveal">Personal Projects</div>
+  <div class="projects-grid">
+
+    <!-- 1. Dental Management System -->
+    <div class="project-card reveal" data-project="dental">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+        </div>
+        <div class="browser-bar">https://reuchnetoothfairyclinic.free.nf/index.php</div>
+      </div>
+      <div class="card-carousel">
+        <div class="carousel-slides">
+          <div class="carousel-slide">
+            <img src="images/dental-1.png" alt="Dental Dashboard" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0d2137,#0a3d5c)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/dental-2.png" alt="Dental Booking" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0d2137,#0c4a3d)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/dental-3.png" alt="Dental Receipt" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1a1a2e,#16213e)'">
+          </div>
+        </div>
+        <div class="carousel-dots">
+          <button class="carousel-dot-btn active"></button>
+          <button class="carousel-dot-btn"></button>
+          <button class="carousel-dot-btn"></button>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Dental Clinic Management &amp; Booking System</h3>
+        <p class="card-desc">
+          Reuchne Tooth Fairy Dental Clinic. A full-stack system with Doctor, Patient, and Admin accounts. Handles
+          patient management, appointment booking, receipt generation, and
+          revenue tracking.
+        </p>
+        <div class="card-tags">
+          <span class="card-tag">PHP</span>
+          <span class="card-tag">MySQL</span>
+          <span class="card-tag">Bootstrap</span>
+          <span class="card-tag">JavaScript</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://reuchnetoothfairyclinic.free.nf" target="_blank" class="card-link live">Visit Site</a>
+        <a href="https://github.com/Kairu075/Reuchne-Tooth-Fairy-Clinic" target="_blank" class="card-link github">GitHub</a>
+      </div>
+    </div>
+
+    <!-- 2. Barangay Management System -->
+    <div class="project-card reveal reveal-delay-1" data-project="barangay">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+        </div>
+        <div class="browser-bar">barangay-system.localhost/admin</div>
+      </div>
+      <div class="card-carousel">
+        <div class="carousel-slides">
+          <div class="carousel-slide">
+            <img src="images/barangay-1.png" alt="Barangay Dashboard" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1a2a1a,#0f3d1f)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/barangay-2.png" alt="Barangay Documents" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1a2a1a,#1d3a2a)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/barangay-3.png" alt="Barangay Complaints" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1a2a1a,#2a3d1a)'">
+          </div>
+        </div>
+        <div class="carousel-dots">
+          <button class="carousel-dot-btn active"></button>
+          <button class="carousel-dot-btn"></button>
+          <button class="carousel-dot-btn"></button>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Barangay Management System</h3>
+        <p class="card-desc">
+          Community system with document and receipt generation, Admin and
+          Resident accounts, announcement features, and a complaints management
+          portal.
+        </p>
+        <div class="card-tags">
+          <span class="card-tag">PHP</span>
+          <span class="card-tag">MySQL</span>
+          <span class="card-tag">Laravel</span>
+          <span class="card-tag">CSS3</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://reuchnetoothfairyclinic.free.nf" target="_blank" class="card-link live">Visit Site</a>
+        <a href="https://github.com/kairu075" target="_blank" class="card-link github">GitHub</a>
+      </div>
+    </div>
+
+    <!-- 3. Clothing E-Commerce -->
+    <div class="project-card reveal reveal-delay-2" data-project="clothing">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+        </div>
+        <div class="browser-bar">threadstore.localhost/shop</div>
+      </div>
+      <div class="card-carousel">
+        <div class="carousel-slides">
+          <div class="carousel-slide">
+            <img src="images/clothing-1.png" alt="Clothing Store Front" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#2a1a2e,#3d1a4a)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/clothing-2.png" alt="Clothing Admin Panel" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#2a1a2e,#4a1a3d)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/clothing-3.png" alt="Clothing Inventory" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1e1a2e,#2e1a4a)'">
+          </div>
+        </div>
+        <div class="carousel-dots">
+          <button class="carousel-dot-btn active"></button>
+          <button class="carousel-dot-btn"></button>
+          <button class="carousel-dot-btn"></button>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Clothing E-Commerce Platform</h3>
+        <p class="card-desc">
+          Full-stack e-commerce website for clothing retail. Features stock
+          management, admin dashboard for orders and inventory, and a seamless
+          shopping experience.
+        </p>
+        <div class="card-tags">
+          <span class="card-tag">PHP</span>
+          <span class="card-tag">MySQL</span>
+          <span class="card-tag">JavaScript</span>
+          <span class="card-tag">Bootstrap</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://reuchnetoothfairyclinic.free.nf" target="_blank" class="card-link live">Visit Site</a>
+        <a href="https://github.com/kairu075" target="_blank" class="card-link github">GitHub</a>
+      </div>
+    </div>
+
+    <!-- 4. Gadgets E-Commerce -->
+    <div class="project-card reveal reveal-delay-1" data-project="gadgets">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+        </div>
+        <div class="browser-bar">techvault.localhost/products</div>
+      </div>
+      <div class="card-carousel">
+        <div class="carousel-slides">
+          <div class="carousel-slide">
+            <img src="images/gadgets-1.png" alt="Gadgets Catalog" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0d1a2e,#0a2a4a)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/gadgets-2.png" alt="Gadgets Admin" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0d1a2e,#0a3d5c)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/gadgets-3.png" alt="Gadgets Orders" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0d1a2e,#1a2a4a)'">
+          </div>
+        </div>
+        <div class="carousel-dots">
+          <button class="carousel-dot-btn active"></button>
+          <button class="carousel-dot-btn"></button>
+          <button class="carousel-dot-btn"></button>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Gadgets E-Commerce Platform</h3>
+        <p class="card-desc">
+          Full-stack electronics store with Admin and Customer accounts. Includes
+          stock management, product listings, cart functionality, and order
+          tracking.
+        </p>
+        <div class="card-tags">
+          <span class="card-tag">PHP</span>
+          <span class="card-tag">MySQL</span>
+          <span class="card-tag">jQuery</span>
+          <span class="card-tag">CSS3</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://reuchnetoothfairyclinic.free.nf" target="_blank" class="card-link live">Visit Site</a>
+        <a href="https://github.com/kairu075" target="_blank" class="card-link github">GitHub</a>
+      </div>
+    </div>
+
+    <!-- 5. Cinema Booking -->
+    <div class="project-card reveal reveal-delay-2" data-project="cinema">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+        </div>
+        <div class="browser-bar">cineplex.localhost/booking</div>
+      </div>
+      <div class="card-carousel">
+        <div class="carousel-slides">
+          <div class="carousel-slide">
+            <img src="images/cinema-1.png" alt="Cinema Seat Selection" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1a0d2e,#2e0d4a)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/cinema-2.png" alt="Cinema Ticket" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1a0d2e,#4a0d3d)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/cinema-3.png" alt="Cinema Admin" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1a0d2e,#1a0d3d)'">
+          </div>
+        </div>
+        <div class="carousel-dots">
+          <button class="carousel-dot-btn active"></button>
+          <button class="carousel-dot-btn"></button>
+          <button class="carousel-dot-btn"></button>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Cinema Booking &amp; Management System</h3>
+        <p class="card-desc">
+          Interactive cinema booking platform with visual seat selection, receipt
+          and ticket generation, and a full management system for screenings
+          and revenue.
+        </p>
+        <div class="card-tags">
+          <span class="card-tag">PHP</span>
+          <span class="card-tag">MySQL</span>
+          <span class="card-tag">JavaScript</span>
+          <span class="card-tag">Bootstrap</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://reuchnetoothfairyclinic.free.nf" target="_blank" class="card-link live">Visit Site</a>
+        <a href="https://github.com/kairu075" target="_blank" class="card-link github">GitHub</a>
+      </div>
+    </div>
+
+    <!-- 6. Arcadia Hobby House (Collab) -->
+    <div class="project-card reveal reveal-delay-3" data-project="arcadia" style="position: relative">
+      <span class="collab-label">Collaborated</span>
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+        </div>
+        <div class="browser-bar">arcadiahobbyhouse.com</div>
+      </div>
+      <div class="card-carousel">
+        <div class="carousel-slides">
+          <div class="carousel-slide">
+            <img src="images/arcadia-1.png" alt="Arcadia Home" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1a1a0d,#3d3d0d)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/arcadia-2.png" alt="Arcadia Products" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1a1a0d,#2e2e0a)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/arcadia-3.png" alt="Arcadia Admin" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1a1a0d,#4a4a0d)'">
+          </div>
+        </div>
+        <div class="carousel-dots">
+          <button class="carousel-dot-btn active"></button>
+          <button class="carousel-dot-btn"></button>
+          <button class="carousel-dot-btn"></button>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Arcadia Hobby House</h3>
+        <p class="card-desc">
+          Collaborative e-commerce platform for hobby enthusiasts. Full-stack
+          with Admin and Customer accounts, stock management, and a curated
+          product experience.
+        </p>
+        <div class="card-tags">
+          <span class="card-tag collab">Collab</span>
+          <span class="card-tag">PHP</span>
+          <span class="card-tag">MySQL</span>
+          <span class="card-tag">Laravel</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="#" class="card-link live" onclick="return false">Visit Site</a>
+        <a href="https://github.com/kairu075" target="_blank" class="card-link github">GitHub</a>
+      </div>
+    </div>
+
+    <!-- 7. Placeholder — edit me -->
+    <div class="project-card reveal" data-project="new-project-1">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+        </div>
+        <div class="browser-bar">yourproject.com</div>
+      </div>
+      <div class="card-carousel">
+        <div class="carousel-slides">
+          <div class="carousel-slide">
+            <img src="images/project7-1.png" alt="Project Screenshot 1" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0a1a2e,#0a2e4a)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/project7-2.png" alt="Project Screenshot 2" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0a1a2e,#0a3d5a)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/project7-3.png" alt="Project Screenshot 3" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0a1a2e,#1a2a4a)'">
+          </div>
+        </div>
+        <div class="carousel-dots">
+          <button class="carousel-dot-btn active"></button>
+          <button class="carousel-dot-btn"></button>
+          <button class="carousel-dot-btn"></button>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Project Title Here</h3>
+        <p class="card-desc">
+          Project Description Dito
+        </p>
+        <div class="card-tags">
+          <span class="card-tag">Tech 1</span>
+          <span class="card-tag">Tech 2</span>
+          <span class="card-tag">Tech 3</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="#" class="card-link live" onclick="return false">Visit Site</a>
+        <a href="#" class="card-link github">GitHub</a>
+      </div>
+    </div>
+
+    <!-- 8. Placeholder — edit me -->
+    <div class="project-card reveal reveal-delay-1" data-project="new-project-2">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+        </div>
+        <div class="browser-bar">yourproject.com</div>
+      </div>
+      <div class="card-carousel">
+        <div class="carousel-slides">
+          <div class="carousel-slide">
+            <img src="images/project8-1.png" alt="Project Screenshot 1" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1a0d2a,#2e0d4a)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/project8-2.png" alt="Project Screenshot 2" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1a0d2a,#3a0d4a)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/project8-3.png" alt="Project Screenshot 3" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1a0d2a,#2a0d3a)'">
+          </div>
+        </div>
+        <div class="carousel-dots">
+          <button class="carousel-dot-btn active"></button>
+          <button class="carousel-dot-btn"></button>
+          <button class="carousel-dot-btn"></button>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Project Title Here</h3>
+        <p class="card-desc">
+          Project Description Dito
+        </p>
+        <div class="card-tags">
+          <span class="card-tag">Tech 1</span>
+          <span class="card-tag">Tech 2</span>
+          <span class="card-tag">Tech 3</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="#" class="card-link live" onclick="return false">Visit Site</a>
+        <a href="#" class="card-link github">GitHub</a>
+      </div>
+    </div>
+
+  </div><!-- end .projects-grid -->
+</section>
+
+<div class="section-divider"></div>
+
+<!-- =============================================
+   OTHER IT PROJECTS
+============================================= -->
+<section id="it-projects">
+  <div class="section-label gold reveal">Other IT Projects</div>
+  <h2 class="section-title reveal">Beyond the Web</h2>
+  <p class="section-subtitle reveal">
+    Hands-on projects that pushed my technical range.
+  </p>
+
+  <div class="projects-grid">
+
+    <!-- Portal Quests Game -->
+    <div class="project-card reveal" data-project="portalquests">
+      <span class="collab-label">Collaborated</span>
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+        </div>
+        <div class="browser-bar">unity://portal-quests &mdash; Android Game</div>
+      </div>
+      <div class="card-carousel">
+        <div class="carousel-slides">
+          <div class="carousel-slide">
+            <img src="images/portalquests-1.png" alt="Portal Quests Menu" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0a0a1a,#1a0a3a)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/portalquests-2.jpg" alt="Portal Quests Gameplay" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0a0a1a,#0a0a3a)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/portalquests-3.png" alt="Portal Quests Portals" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0a0a1a,#1a0a2e)'">
+          </div>
+        </div>
+        <div class="carousel-dots">
+          <button class="carousel-dot-btn active"></button>
+          <button class="carousel-dot-btn"></button>
+          <button class="carousel-dot-btn"></button>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Portal Quests</h3>
+        <p class="card-desc">
+          An Android mobile 3D third-person parkour game built in Unity. Players
+          navigate obstacle courses and activate portals to escape back to the
+          real world. Features custom level design and physics-based movement.
+          Collaborated with a team of 6, contributing to gameplay programming and level design.
+        </p>
+        <div class="card-tags">
+          <span class="card-tag" style="color: var(--accent-gold); background: rgba(245,200,66,0.08); border-color: rgba(245,200,66,0.2)">Game Dev</span>
+          <span class="card-tag" style="color: var(--accent-gold); background: rgba(245,200,66,0.08); border-color: rgba(245,200,66,0.2)">Unity</span>
+          <span class="card-tag">C#</span>
+          <span class="card-tag">Android</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="https://drive.google.com/file/d/1vtCD7iMWcFOcwGPbg0Jne4cl0RwVsG2p/view" target="_blank" class="card-link live" style="background: var(--accent-gold); color: #000">Download Game</a>
+        <a href="https://github.com/Kairu075/Portal-Quest" target="_blank" class="card-link github">GitHub</a>
+      </div>
+    </div>
+
+    <!-- Java Kiosk POS -->
+    <div class="project-card reveal reveal-delay-1" data-project="javakiosk">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+        </div>
+        <div class="browser-bar">java://restaurant-kiosk &mdash; Desktop App</div>
+      </div>
+      <div class="card-carousel">
+        <div class="carousel-slides">
+          <div class="carousel-slide">
+            <img src="images/kiosk-1.png" alt="Kiosk Main Screen" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0d1a0d,#1a3d1a)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/kiosk-2.png" alt="Kiosk Menu Order" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0d1a0d,#0d3a1a)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/kiosk-3.png" alt="Kiosk Receipt" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0d1a0d,#1a3d0d)'">
+          </div>
+        </div>
+        <div class="carousel-dots">
+          <button class="carousel-dot-btn active"></button>
+          <button class="carousel-dot-btn"></button>
+          <button class="carousel-dot-btn"></button>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">Restaurant Kiosk with POS</h3>
+        <p class="card-desc">
+          A Java desktop application featuring an interactive restaurant kiosk
+          and POS system built with Java Swing GUI. Customers browse the menu,
+          place orders, and receive itemized receipts.
+        </p>
+        <div class="card-tags">
+          <span class="card-tag" style="color: #f07800; background: rgba(240,120,0,0.08); border-color: rgba(240,120,0,0.2)">Java</span>
+          <span class="card-tag" style="color: #f07800; background: rgba(240,120,0,0.08); border-color: rgba(240,120,0,0.2)">Swing GUI</span>
+          <span class="card-tag">Desktop App</span>
+          <span class="card-tag">Kiosk</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="#" class="card-link live" onclick="return false">Visit Site</a>
+        <a href="https://github.com/kairu075" target="_blank" class="card-link github">GitHub</a>
+      </div>
+    </div>
+
+    <!-- IT Placeholder — edit me -->
+    <div class="project-card reveal reveal-delay-2" data-project="new-it-project">
+      <div class="browser-chrome">
+        <div class="browser-dots">
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+        </div>
+        <div class="browser-bar">your-it-project.dev</div>
+      </div>
+      <div class="card-carousel">
+        <div class="carousel-slides">
+          <div class="carousel-slide">
+            <img src="images/itproject3-1.png" alt="IT Project Screenshot" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0a1a0a,#1a3a1a)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/itproject3-2.png" alt="IT Project Screenshot 2" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0a1a0a,#2a3a1a)'">
+          </div>
+          <div class="carousel-slide">
+            <img src="images/itproject3-3.png" alt="IT Project Screenshot 3" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0a1a0a,#1a2a0a)'">
+          </div>
+        </div>
+        <div class="carousel-dots">
+          <button class="carousel-dot-btn active"></button>
+          <button class="carousel-dot-btn"></button>
+          <button class="carousel-dot-btn"></button>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">IT Project Title Here</h3>
+        <p class="card-desc">
+          Add IT project description dito
+        </p>
+        <div class="card-tags">
+          <span class="card-tag" style="color: var(--accent-gold); background: rgba(245,200,66,0.08); border-color: rgba(245,200,66,0.2)">Category</span>
+          <span class="card-tag">Tech 1</span>
+          <span class="card-tag">Tech 2</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <a href="#" class="card-link live" onclick="return false">Visit Site</a>
+        <a href="#" class="card-link github">GitHub</a>
+      </div>
+    </div>
+
+  </div><!-- end .projects-grid -->
+</section>
+
+<div class="section-divider"></div>
+
+<!-- =============================================
+   CERTIFICATIONS
+============================================= -->
+<section id="certifications">
+  <div class="section-label reveal">Certifications</div>
+  <h2 class="section-title reveal">Verified Learning</h2>
+  <p class="section-subtitle reveal">
+    Certificates earned through courses, workshops, and professional development.
+    Click any card to view full details.
+  </p>
+
+  <div class="certs-grid">
+
+    <!-- Cert 1 — Simplilearn -->
+    <div class="cert-card reveal" data-cert="cert1">
+      <div class="browser-chrome" style="border-radius: 12px 12px 0 0">
+        <div class="browser-dots">
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+        </div>
+        <div class="browser-bar">https://simpli-web.app.link/e/noq1Kvg8x2b</div>
+      </div>
+      <div class="cert-img-wrap">
+        <img src="images/cert-1.png" alt="Full-Stack Development 101 Certificate" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0d1a2e,#0a2a4a)'">
+      </div>
+      <div class="cert-body">
+        <div class="cert-issuer">Simplilearn SkillUp</div>
+        <div class="cert-name">Full-Stack Development 101</div>
+        <div class="cert-date">April 2026</div>
+        <p class="cert-desc">
+          Validates foundational knowledge in full-stack web development covering
+          front-end and back-end concepts, development workflows, and practical
+          application fundamentals.
+        </p>
+      </div>
+    </div>
+
+    <!-- Cert 2 — Edit me -->
+    <div class="cert-card reveal reveal-delay-1" data-cert="cert2">
+      <div class="browser-chrome" style="border-radius: 12px 12px 0 0">
+        <div class="browser-dots">
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+        </div>
+        <div class="browser-bar">issuer.com/verify/cert</div>
+      </div>
+      <div class="cert-img-wrap">
+        <img src="images/cert-2.png" alt="Certificate 2" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#1a0d2e,#2e0d4a)'">
+      </div>
+      <div class="cert-body">
+        <div class="cert-issuer">Certification Issuer</div>
+        <div class="cert-name">Certificate Name Here</div>
+        <div class="cert-date">Month Year</div>
+        <p class="cert-desc">
+          Brief description of what this certification covers and the skills
+          it validates.
+        </p>
+      </div>
+    </div>
+
+    <!-- Cert 3 — Edit me -->
+    <div class="cert-card reveal reveal-delay-2" data-cert="cert3">
+      <div class="browser-chrome" style="border-radius: 12px 12px 0 0">
+        <div class="browser-dots">
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+        </div>
+        <div class="browser-bar">issuer.com/verify/cert</div>
+      </div>
+      <div class="cert-img-wrap">
+        <img src="images/cert-3.png" alt="Certificate 3" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0d2a1a,#0a4a2e)'">
+      </div>
+      <div class="cert-body">
+        <div class="cert-issuer">Certification Issuer</div>
+        <div class="cert-name">Certificate Name Here</div>
+        <div class="cert-date">Month Year</div>
+        <p class="cert-desc">
+          Brief description of what this certification covers and the skills
+          it validates.
+        </p>
+      </div>
+    </div>
+
+    <!-- Cert 4 — Edit me -->
+    <div class="cert-card reveal reveal-delay-3" data-cert="cert4">
+      <div class="browser-chrome" style="border-radius: 12px 12px 0 0">
+        <div class="browser-dots">
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+          <span class="browser-dot"></span>
+        </div>
+        <div class="browser-bar">issuer.com/verify/cert</div>
+      </div>
+      <div class="cert-img-wrap">
+        <img src="images/cert-4.png" alt="Certificate 4" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#2e1a0d,#4a2a0a)'">
+      </div>
+      <div class="cert-body">
+        <div class="cert-issuer">Certification Issuer</div>
+        <div class="cert-name">Certificate Name Here</div>
+        <div class="cert-date">Month Year</div>
+        <p class="cert-desc">
+          Brief description of what this certification covers and the skills
+          it validates.
+        </p>
+      </div>
+    </div>
+
+  </div><!-- end .certs-grid -->
+</section>
+
+<div class="section-divider"></div>
+
+<!-- =============================================
+   CONTACT
+============================================= -->
+<section id="contact">
+  <div class="contact-grid">
+
+    <!-- Left: Info -->
+    <div class="reveal">
+      <div class="section-label">Contact</div>
+      <h2 class="section-title">Let's Build<br>Something</h2>
+      <p style="color: var(--text2); font-size: 0.92rem; line-height: 1.8; margin-bottom: 36px; max-width: 360px">
+        Open to freelance work, internships, and full-time opportunities.
+        Let's connect and create something impactful.
+      </p>
+
+      <div class="contact-item">
+        <div class="contact-icon">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" alt="Gmail">
+        </div>
+        <div class="contact-detail">
+          <strong>Email</strong>
+          <a href="mailto:kyledominic075@gmail.com">kyledominic075@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" style="filter: invert(0.7)">
+        </div>
+        <div class="contact-detail">
+          <strong>GitHub</strong>
+          <a href="https://github.com/kairu075" target="_blank">github.com/kairu075</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+        </div>
+        <div class="contact-detail">
+          <strong>Facebook</strong>
+          <a href="https://www.facebook.com/Kairuux" target="_blank">Kyle Dominic Yap</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn">
+        </div>
+        <div class="contact-detail">
+          <strong>LinkedIn</strong>
+          <a href="https://www.linkedin.com/in/kyle-dominic-yap-455222347/" target="_blank">Kyle Dominic Yap</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C9.6 21 3 14.4 3 6c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z" stroke="rgba(0,212,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="contact-detail">
+          <strong>Phone</strong>
+          <a href="tel:09993574110">0999 357 4110</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Form -->
+    <div class="reveal reveal-delay-2">
+      <form class="contact-form" id="contactForm">
+        <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_KEY_HERE">
+        <input type="checkbox" name="botcheck" style="display: none">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="fname" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="femail" placeholder="your@email.com" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Subject</label>
+          <select id="fsubject">
+            <option value="">Select a subject...</option>
+            <option>Freelance Project Inquiry</option>
+            <option>Job Opportunity</option>
+            <option>Collaboration</option>
+            <option>General Question</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Message</label>
+          <textarea id="fmessage" placeholder="Tell me about your project or opportunity..." required></textarea>
+        </div>
+
+        <div class="form-status" id="formStatus"></div>
+
+        <button type="submit" class="btn-primary" id="submitBtn" style="align-self: flex-start; font-size: 0.82rem">
+          Send Message
+        </button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- =============================================
+   FOOTER
+============================================= -->
+<footer>
+  <div class="footer-copy">
+    &copy; 2025 <strong>Kyle Dominic Yap</strong> — Full Stack Developer
+  </div>
+  <div class="footer-links">
+    <a href="#hero">Top</a>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#it-projects">IT Projects</a>
+    <a href="#certifications">Certs</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<!-- =============================================
+   UNIVERSAL MODAL
+============================================= -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-browser">
+      <div class="modal-dots">
+        <span class="modal-dot" id="modalClose"></span>
+        <span class="modal-dot"></span>
+        <span class="modal-dot"></span>
+      </div>
+      <div class="modal-url" id="modalUrl">loading...</div>
+    </div>
+
+    <!-- Dynamic content: project carousel OR cert single image -->
+    <div id="modalVisual"></div>
+
+    <div class="modal-body">
+      <div class="modal-badge" id="modalBadge" style="display: none"></div>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <p class="modal-desc" id="modalDesc"></p>
+      <div id="modalMeta"></div>
+      <div class="modal-actions" id="modalActions"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- =============================================
+   JAVASCRIPT
+============================================= -->
+<script>
+
+/* -----------------------------------------------
+   DATA — Projects
+----------------------------------------------- */
+const projectData = {
+  dental: {
+    title: "Dental Clinic Management & Booking System",
+    url: "dentalms.localhost/dashboard",
+    desc: "A comprehensive full-stack dental clinic management system with three account types: Doctor, Patient, and Admin. Features include patient record management, appointment booking visible to both admin and doctor, automated receipt generation, doctor management by admin, and a revenue analytics dashboard.",
+    tags: ["PHP", "MySQL", "Bootstrap", "JavaScript",],
+    live: "https://reuchnetoothfairyclinic.free.nf",
+    github: "https://github.com/Kairu075/Reuchne-Tooth-Fairy-Clinic",
+    slides: [
+      { img: "images/dental-1.png", bg: "linear-gradient(135deg,#0d2137,#0a3d5c)", label: "Admin Dashboard" },
+      { img: "images/dental-2.png", bg: "linear-gradient(135deg,#0d2137,#0c4a3d)", label: "Booking Interface" },
+      { img: "images/dental-3.png", bg: "linear-gradient(135deg,#1a1a2e,#16213e)", label: "Receipt Generation" }
+    ]
+  },
+  barangay: {
+    title: "Barangay Management System",
+    url: "barangay-system.localhost/admin",
+    desc: "A community management platform for local government units. Supports Admin and Resident accounts, document request and receipt generation, public announcement posting, and a complaints management system for residents to file and track issues in real-time.",
+    tags: ["PHP", "Laravel", "MySQL", "CSS3", "JavaScript", "Bootstrap"],
+    live: "#",
+    github: "https://github.com/kairu075",
+    slides: [
+      { img: "images/barangay-1.png", bg: "linear-gradient(135deg,#1a2a1a,#0f3d1f)", label: "Admin Dashboard" },
+      { img: "images/barangay-2.png", bg: "linear-gradient(135deg,#1a2a1a,#1d3a2a)", label: "Documents Portal" },
+      { img: "images/barangay-3.png", bg: "linear-gradient(135deg,#1a2a1a,#2a3d1a)", label: "Complaints Feed" }
+    ]
+  },
+  clothing: {
+    title: "Clothing E-Commerce Platform",
+    url: "threadstore.localhost/shop",
+    desc: "A full-stack e-commerce website for clothing retail with separate Admin and Customer accounts. Admin features include stock management, product CRUD, and order tracking. Customer features include category browsing, cart management, and checkout flow.",
+    tags: ["PHP", "MySQL", "JavaScript", "Bootstrap", "CSS3"],
+    live: "#",
+    github: "https://github.com/kairu075",
+    slides: [
+      { img: "images/clothing-1.png", bg: "linear-gradient(135deg,#2a1a2e,#3d1a4a)", label: "Store Front" },
+      { img: "images/clothing-2.png", bg: "linear-gradient(135deg,#2a1a2e,#4a1a3d)", label: "Admin Panel" },
+      { img: "images/clothing-3.png", bg: "linear-gradient(135deg,#1e1a2e,#2e1a4a)", label: "Inventory View" }
+    ]
+  },
+  gadgets: {
+    title: "Gadgets E-Commerce Platform",
+    url: "techvault.localhost/products",
+    desc: "A feature-rich electronics store with full admin and customer functionalities. Includes product catalog, stock management, shopping cart, and order management. Admin can manage products, view orders, and control inventory levels in real-time.",
+    tags: ["PHP", "MySQL", "jQuery", "CSS3", "AJAX", "Bootstrap"],
+    live: "#",
+    github: "https://github.com/kairu075",
+    slides: [
+      { img: "images/gadgets-1.png", bg: "linear-gradient(135deg,#0d1a2e,#0a2a4a)", label: "Product Catalog" },
+      { img: "images/gadgets-2.png", bg: "linear-gradient(135deg,#0d1a2e,#0a3d5c)", label: "Admin Controls" },
+      { img: "images/gadgets-3.png", bg: "linear-gradient(135deg,#0d1a2e,#1a2a4a)", label: "Order Management" }
+    ]
+  },
+  cinema: {
+    title: "Cinema Booking & Management System",
+    url: "cineplex.localhost/booking",
+    desc: "An interactive cinema booking platform featuring visual seat selection with real-time availability, receipt and ticket PDF generation, and a comprehensive management system for scheduling screenings, managing cinema halls, and tracking revenue.",
+    tags: ["PHP", "MySQL", "JavaScript", "Bootstrap", "FPDF", "CSS3"],
+    live: "#",
+    github: "https://github.com/kairu075",
+    slides: [
+      { img: "images/cinema-1.png", bg: "linear-gradient(135deg,#1a0d2e,#2e0d4a)", label: "Seat Selection" },
+      { img: "images/cinema-2.png", bg: "linear-gradient(135deg,#1a0d2e,#4a0d3d)", label: "Ticket Generation" },
+      { img: "images/cinema-3.png", bg: "linear-gradient(135deg,#1a0d2e,#1a0d3d)", label: "Admin Panel" }
+    ]
+  },
+  arcadia: {
+    title: "Arcadia Hobby House",
+    url: "arcadiahobbyhouse.com",
+    badge: { text: "Collaborated", cls: "collab-badge" },
+    desc: "A collaborative e-commerce platform built for hobbyists and collectors. Full-stack application with Admin and Customer accounts, product catalog management, stock tracking, and a community-oriented shopping experience. Developed as a team project.",
+    tags: ["PHP", "Laravel", "MySQL", "JavaScript", "Bootstrap"],
+    live: "#",
+    github: "https://github.com/kairu075",
+    slides: [
+      { img: "images/arcadia-1.png", bg: "linear-gradient(135deg,#1a1a0d,#3d3d0d)", label: "Home Page" },
+      { img: "images/arcadia-2.png", bg: "linear-gradient(135deg,#1a1a0d,#2e2e0a)", label: "Product Catalog" },
+      { img: "images/arcadia-3.png", bg: "linear-gradient(135deg,#1a1a0d,#4a4a0d)", label: "Admin Dashboard" }
+    ]
+  },
+  "new-project-1": {
+    title: "Project Title Here",
+    url: "yourproject.com",
+    desc: "Add your full project description here. Describe what the system does, who it's for, key features, and any technical highlights that make it stand out.",
+    tags: ["Tech 1", "Tech 2", "Tech 3"],
+    live: "#",
+    github: "#",
+    slides: [
+      { img: "images/project7-1.png", bg: "linear-gradient(135deg,#0a1a2e,#0a2e4a)", label: "View 1" },
+      { img: "images/project7-2.png", bg: "linear-gradient(135deg,#0a1a2e,#0a3d5a)", label: "View 2" },
+      { img: "images/project7-3.png", bg: "linear-gradient(135deg,#0a1a2e,#1a2a4a)", label: "View 3" }
+    ]
+  },
+  "new-project-2": {
+    title: "Project Title Here",
+    url: "yourproject.com",
+    desc: "Add your full project description here. Describe what the system does, who it's for, key features, and any technical highlights that make it stand out.",
+    tags: ["Tech 1", "Tech 2", "Tech 3"],
+    live: "#",
+    github: "#",
+    slides: [
+      { img: "images/project8-1.png", bg: "linear-gradient(135deg,#1a0d2a,#2e0d4a)", label: "View 1" },
+      { img: "images/project8-2.png", bg: "linear-gradient(135deg,#1a0d2a,#3a0d4a)", label: "View 2" },
+      { img: "images/project8-3.png", bg: "linear-gradient(135deg,#1a0d2a,#2a0d3a)", label: "View 3" }
+    ]
+  },
+  portalquests: {
+    title: "Portal Quests",
+    url: "unity://portal-quests — Android Game",
+    badge: { text: "Game Development", cls: "game-badge" },
+    desc: "An Android mobile 3D third-person parkour game built in Unity. Players navigate through physical obstacle courses and must activate portals scattered across each level to escape back to the real world. Features custom level design, physics-based movement mechanics, and progressive difficulty across multiple stages. Developed collaboratively with a team of 6, contributing primarily to gameplay programming and level design.",
+    tags: ["Unity", "C#", "3D Game Dev", "Android", "Physics"],
+    info: { Platform: "Mobile (Android)", Engine: "Unity", Language: "C#", Genre: "Parkour / Adventure" },
+    live: "https://drive.google.com/file/d/1vtCD7iMWcFOcwGPbg0Jne4cl0RwVsG2p/view",
+    github: "https://github.com/Kairu075/Portal-Quest",
+    slides: [
+      { img: "images/portalquests-1.png", bg: "linear-gradient(135deg,#0a0a1a,#1a0a3a)", label: "Main Menu" },
+      { img: "images/portalquests-2.jpg", bg: "linear-gradient(135deg,#0a0a1a,#0a0a3a)", label: "Gameplay" },
+      { img: "images/portalquests-3.png", bg: "linear-gradient(135deg,#0a0a1a,#1a0a2e)", label: "Portal Activation" }
+    ]
+  },
+  javakiosk: {
+    title: "Restaurant Kiosk with POS",
+    url: "java://restaurant-kiosk — Desktop App",
+    badge: { text: "Desktop Application", cls: "cert-badge" },
+    desc: "A Java Swing desktop application designed as a restaurant self-service kiosk with a built-in Point of Sale system. Customers can browse a digital menu organized by category, add items to their order, adjust quantities, and receive an itemized receipt. The POS module tracks orders and total sales in real-time.",
+    tags: ["Java", "Swing GUI", "OOP", "Desktop App", "POS System"],
+    info: { Platform: "Desktop (Java)", Framework: "Swing GUI", Language: "Java", Type: "Kiosk + POS" },
+    live: "#",
+    github: "https://github.com/kairu075",
+    slides: [
+      { img: "images/kiosk-1.png", bg: "linear-gradient(135deg,#0d1a0d,#1a3d1a)", label: "Main Screen" },
+      { img: "images/kiosk-2.png", bg: "linear-gradient(135deg,#0d1a0d,#0d3a1a)", label: "Menu & Order" },
+      { img: "images/kiosk-3.png", bg: "linear-gradient(135deg,#0d1a0d,#1a3d0d)", label: "Receipt Output" }
+    ]
+  },
+  "new-it-project": {
+    title: "IT Project Title Here",
+    url: "your-it-project.dev",
+    desc: "Add your IT project description here. Could be a game, desktop app, hardware project, or any other technology project outside of web development.",
+    tags: ["Category", "Tech 1", "Tech 2"],
+    live: "#",
+    github: "#",
+    slides: [
+      { img: "images/itproject3-1.png", bg: "linear-gradient(135deg,#0a1a0a,#1a3a1a)", label: "View 1" },
+      { img: "images/itproject3-2.png", bg: "linear-gradient(135deg,#0a1a0a,#2a3a1a)", label: "View 2" },
+      { img: "images/itproject3-3.png", bg: "linear-gradient(135deg,#0a1a0a,#1a2a0a)", label: "View 3" }
+    ]
+  }
+};
+
+/* -----------------------------------------------
+   DATA — Certifications
+----------------------------------------------- */
+const certData = {
+  cert1: {
+    title: "Full-Stack Development 101",
+    issuer: "Simplilearn SkillUp",
+    date: "April 2026",
+    url: "https://simpli-web.app.link/e/noq1Kvg8x2b",
+    verifyUrl: "https://simpli-web.app.link/e/noq1Kvg8x2b",
+    desc: "This certification validates foundational knowledge in full-stack web development. It covers essential front-end and back-end concepts, development workflows, and practical application fundamentals. Earning this certification reflects commitment to continuous learning and professional growth.",
+    skills: ["Front-end Fundamentals", "Back-end Fundamentals", "Web Dev Workflow", "Full-Stack Concepts"],
+    img: "images/cert-1.png",
+    bg: "linear-gradient(135deg,#0d1a2e,#0a2a4a)"
+  },
+  cert2: {
+    title: "Certificate Name Here",
+    issuer: "Certification Issuer",
+    date: "Month Year",
+    url: "issuer.com/verify/XXXXXX",
+    verifyUrl: "#",
+    desc: "This certification validates proficiency in [topic area]. It covers fundamental concepts, practical applications, and industry best practices relevant to [skill/technology].",
+    skills: ["Skill 1", "Skill 2", "Skill 3", "Skill 4"],
+    img: "images/cert-2.png",
+    bg: "linear-gradient(135deg,#1a0d2e,#2e0d4a)"
+  },
+  cert3: {
+    title: "Certificate Name Here",
+    issuer: "Certification Issuer",
+    date: "Month Year",
+    url: "issuer.com/verify/XXXXXX",
+    verifyUrl: "#",
+    desc: "This certification validates proficiency in [topic area]. It covers fundamental concepts, practical applications, and industry best practices relevant to [skill/technology].",
+    skills: ["Skill 1", "Skill 2", "Skill 3", "Skill 4"],
+    img: "images/cert-3.png",
+    bg: "linear-gradient(135deg,#0d2a1a,#0a4a2e)"
+  },
+  cert4: {
+    title: "Certificate Name Here",
+    issuer: "Certification Issuer",
+    date: "Month Year",
+    url: "issuer.com/verify/XXXXXX",
+    verifyUrl: "#",
+    desc: "This certification validates proficiency in [topic area]. It covers fundamental concepts, practical applications, and industry best practices relevant to [skill/technology].",
+    skills: ["Skill 1", "Skill 2", "Skill 3", "Skill 4"],
+    img: "images/cert-4.png",
+    bg: "linear-gradient(135deg,#2e1a0d,#4a2a0a)"
+  }
+};
+
+/* -----------------------------------------------
+   SCROLL REVEAL
+----------------------------------------------- */
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  },
+  { threshold: 0.08, rootMargin: '0px 0px -50px 0px' }
+);
+
+document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+/* -----------------------------------------------
+   NAV SCROLL CLASS
+----------------------------------------------- */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* -----------------------------------------------
+   MOBILE NAV
+----------------------------------------------- */
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileNav').classList.add('open');
+});
+
+document.getElementById('mobileNavClose').addEventListener('click', () => {
+  document.getElementById('mobileNav').classList.remove('open');
+});
+
+document.querySelectorAll('.mobile-nav-link').forEach((link) => {
+  link.addEventListener('click', () => {
+    document.getElementById('mobileNav').classList.remove('open');
+  });
+});
+
+/* -----------------------------------------------
+   CARD CAROUSELS (auto-play on hover)
+----------------------------------------------- */
+document.querySelectorAll('.project-card, .cert-card').forEach((card) => {
+  const slidesWrap = card.querySelector('.carousel-slides');
+  const dots = card.querySelectorAll('.carousel-dot-btn');
+  if (!slidesWrap) return;
+
+  let cur = 0;
+  let timer;
+  const count = card.querySelectorAll('.carousel-slide').length;
+
+  const go = (n) => {
+    cur = (n + count) % count;
+    slidesWrap.style.transform = `translateX(-${cur * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+  };
+
+  dots.forEach((d, i) => {
+    d.addEventListener('click', (e) => {
+      e.stopPropagation();
+      go(i);
+      clearInterval(timer);
+      timer = setInterval(() => go(cur + 1), 3000);
+    });
+  });
+
+  card.addEventListener('mouseenter', () => {
+    clearInterval(timer);
+    timer = setInterval(() => go(cur + 1), 3000);
+  });
+
+  card.addEventListener('mouseleave', () => clearInterval(timer));
+});
+
+/* -----------------------------------------------
+   MODAL ENGINE
+----------------------------------------------- */
+let mCur = 0;
+let mTotal = 0;
+let mTimer;
+
+const overlay = document.getElementById('modalOverlay');
+
+const goModal = (n) => {
+  mCur = (n + mTotal) % mTotal;
+  const slidesEl = document.getElementById('modalSlidesInner');
+  if (slidesEl) slidesEl.style.transform = `translateX(-${mCur * 100}%)`;
+  document.querySelectorAll('#modalDots .carousel-dot-btn').forEach((d, i) => {
+    d.classList.toggle('active', i === mCur);
+  });
+};
+
+document.getElementById('modalClose').addEventListener('click', closeModal);
+overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+
+function buildProjectVisual(slides) {
+  const html = `
+    <div class="modal-carousel">
+      <div class="modal-slides" id="modalSlidesInner">
+        ${slides.map((s) => `
+          <div class="modal-slide">
+            <img
+              src="${s.img}"
+              alt="${s.label}"
+              onerror="this.style.display='none';this.parentElement.style.background='${s.bg}'"
+            >
+          </div>
+        `).join('')}
+      </div>
+      <button class="modal-nav modal-nav-prev" id="modalPrev">&#8249;</button>
+      <button class="modal-nav modal-nav-next" id="modalNext">&#8250;</button>
+      <div class="modal-carousel-dots" id="modalDots">
+        ${slides.map((_, i) => `<button class="carousel-dot-btn${i === 0 ? ' active' : ''}"></button>`).join('')}
+      </div>
+    </div>
+  `;
+  document.getElementById('modalVisual').innerHTML = html;
+
+  document.getElementById('modalPrev').addEventListener('click', () => goModal(mCur - 1));
+  document.getElementById('modalNext').addEventListener('click', () => goModal(mCur + 1));
+  document.querySelectorAll('#modalDots .carousel-dot-btn').forEach((d, i) => {
+    d.addEventListener('click', () => goModal(i));
+  });
+
+  mTotal = slides.length;
+  mCur = 0;
+}
+
+function buildCertVisual(cert) {
+  const html = `
+    <div class="modal-cert-img-wrap">
+      <img
+        src="${cert.img}"
+        alt="${cert.title}"
+        onerror="this.style.display='none';this.parentElement.innerHTML='<div class=modal-cert-placeholder><svg width=48 height=48 viewBox=\\'0 0 48 48\\' fill=\\'none\\'><rect x=\\'4\\' y=\\'8\\' width=\\'40\\' height=\\'32\\' rx=\\'3\\' stroke=\\'rgba(0,255,170,0.3)\\' stroke-width=\\'2\\'/></svg><span>cert-img-here</span></div>'"
+      >
+    </div>
+  `;
+  document.getElementById('modalVisual').innerHTML = html;
+}
+
+function openProjectModal(key) {
+  const p = projectData[key];
+  if (!p) return;
+
+  document.getElementById('modalUrl').textContent = p.url;
+
+  const badge = document.getElementById('modalBadge');
+  if (p.badge) {
+    badge.textContent = p.badge.text;
+    badge.className = 'modal-badge ' + p.badge.cls;
+    badge.style.display = 'inline-flex';
+  } else {
+    badge.style.display = 'none';
+  }
+
+  document.getElementById('modalTitle').textContent = p.title;
+  document.getElementById('modalDesc').textContent = p.desc;
+
+  let meta = `
+    <label>Technologies Used</label>
+    <div class="modal-tags">
+      ${p.tags.map((t) => `<span class="card-tag">${t}</span>`).join('')}
+    </div>
+  `;
+
+  if (p.info) {
+    meta += `
+      <div class="modal-info-row">
+        ${Object.entries(p.info).map(([k, v]) => `
+          <div class="modal-info-item">
+            <label>${k}</label>
+            <span>${v}</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  document.getElementById('modalMeta').innerHTML = meta;
+
+  const isGame = p.title.includes('Portal');
+  document.getElementById('modalActions').innerHTML = `
+    <a href="${p.live}" class="modal-btn ${isGame ? 'game-btn' : 'live'}" target="_blank">
+      ${isGame ? 'Download Game' : (p.info ? 'View Demo' : 'Visit Site')}
+    </a>
+    <a href="${p.github}" class="modal-btn github" target="_blank">View on GitHub</a>
+  `;
+
+  buildProjectVisual(p.slides);
+  clearInterval(mTimer);
+  mTimer = setInterval(() => goModal(mCur + 1), 2800);
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function openCertModal(key) {
+  const c = certData[key];
+  if (!c) return;
+
+  document.getElementById('modalUrl').textContent = c.url;
+
+  const badge = document.getElementById('modalBadge');
+  badge.textContent = c.issuer;
+  badge.className = 'modal-badge cert-badge';
+  badge.style.display = 'inline-flex';
+
+  document.getElementById('modalTitle').textContent = c.title;
+  document.getElementById('modalDesc').textContent = c.desc;
+
+  document.getElementById('modalMeta').innerHTML = `
+    <label>Issued By</label>
+    <div style="color: var(--text); font-size: 0.9rem; font-weight: 500; margin-bottom: 4px">${c.issuer}</div>
+    <label>Date Issued</label>
+    <div style="color: var(--text); font-size: 0.9rem; font-weight: 500">${c.date}</div>
+    <label>Skills Validated</label>
+    <div class="modal-tags">
+      ${c.skills.map((s) => `<span class="card-tag" style="color: var(--accent3); background: rgba(0,255,170,0.08); border-color: rgba(0,255,170,0.2)">${s}</span>`).join('')}
+    </div>
+  `;
+
+  document.getElementById('modalActions').innerHTML = `
+    <a href="${c.verifyUrl}" class="modal-btn cert-verify" target="_blank">Verify Certificate</a>
+    <a href="#contact" class="modal-btn github" onclick="closeModal()">Get In Touch</a>
+  `;
+
+  buildCertVisual(c);
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+  clearInterval(mTimer);
+}
+
+/* Bind cards to modal */
+document.querySelectorAll('.project-card').forEach((card) => {
+  card.addEventListener('click', () => openProjectModal(card.dataset.project));
+});
+
+document.querySelectorAll('.cert-card').forEach((card) => {
+  card.addEventListener('click', () => openCertModal(card.dataset.cert));
+});
+
+/* Keyboard nav */
+document.addEventListener('keydown', (e) => {
+  if (!overlay.classList.contains('active')) return;
+  if (e.key === 'Escape') closeModal();
+  if (e.key === 'ArrowLeft') goModal(mCur - 1);
+  if (e.key === 'ArrowRight') goModal(mCur + 1);
+});
+
+/* -----------------------------------------------
+   CONTACT FORM — Web3Forms
+----------------------------------------------- */
+document.getElementById('contactForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const btn = document.getElementById('submitBtn');
+  const status = document.getElementById('formStatus');
+
+  const name = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  const subject = document.getElementById('fsubject').value || 'Portfolio Contact';
+  const message = document.getElementById('fmessage').value.trim();
+
+  if (!name || !email || !message) return;
+
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  btn.style.opacity = '0.7';
+
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: 'YOUR_WEB3FORMS_KEY_HERE',  /* replace with your key from web3forms.com */
+        name,
+        email,
+        subject,
+        message,
+        from_name: 'Portfolio Contact Form',
+        replyto: email
+      })
+    });
+
+    const data = await res.json();
+    status.style.display = 'block';
+
+    if (data.success) {
+      status.className = 'form-status success';
+      status.textContent = "Message sent! I'll get back to you soon.";
+      e.target.reset();
+    } else {
+      throw new Error('failed');
+    }
+  } catch {
+    status.style.display = 'block';
+    status.className = 'form-status error';
+    status.textContent = 'Could not send. Email me directly: kyledominic075@gmail.com';
+  }
+
+  btn.textContent = 'Send Message';
+  btn.disabled = false;
+  btn.style.opacity = '1';
+  setTimeout(() => { status.style.display = 'none'; }, 6000);
+});
+
+</script>
+</body>
+</html>
